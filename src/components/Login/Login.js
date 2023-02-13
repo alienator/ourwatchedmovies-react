@@ -1,6 +1,31 @@
 import React from 'react';
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            formChanged: true,
+            validEmail: false,
+            validPassword: false
+        };
+    }
+
+    validateEmail(value) {
+        this.setState({ formChanged: true });
+
+        const pattern = /^\w+[\.]*[\w]*@\w*\.\w{2,3}$/;
+        const result = (value.match(pattern)) ? true : false;
+        if (result == false) this.setState({ validEmail: false });
+    }
+
+    validatePassword(value) {
+        this.setState({ formChanged: true });
+
+        const pattern = /^.*(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
+        const result = (value.match(pattern)) ? true : false;
+        if (result == false) this.setState({ validPassword: false });
+    }
+
     render() {
         return (
             <form id="login-form">
@@ -10,14 +35,27 @@ class Login extends React.Component {
                         Email *
                         <input
                             type="email"
-                            name="email" />
+                            name="email"
+                            onChange={(e) => this.validateEmail(e.target.value)} />
                     </label>
+                    {this.state.formChanged && !this.state.validEmail &&
+                        <div className='invalid-input'>
+                            Email must be a valid email
+                        </div>
+                    }
                     <label>
                         Password *
                         <input
                             type="password"
-                            name="password" />
+                            name="password"
+                            onChange={(e) => this.validatePassword(e.target.value)} />
                     </label>
+                    {this.state.formChanged && !this.state.validPassword &&
+                        <div className='invalid-input'>
+                            Password must be 7 chars long
+                        </div>
+                    }
+
                     <button type="submit">login</button>
                 </div>
             </form>
