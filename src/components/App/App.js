@@ -10,19 +10,25 @@ class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            userLoged: false
+            userLoged: false,
+            userInfo: null
         };
     }
     
     handleLogin() {
         const res = this.props.Api.login();
-        if (res) this.setState({userLoged: true});
+        if (res) {
+            this.setState({
+                userLoged: true,
+                userInfo: this.props.Api.userInfo()
+            });
+        }
     }
     
     render() {
         return (
             <>
-                <Header />
+                <Header User={this.state.userInfo}/>
                 
                 {!this.state.userLoged &&
                  <Login onSubmit={() => this.handleLogin()}/>}

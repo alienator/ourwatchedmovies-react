@@ -15,9 +15,20 @@ describe('App', () => {
 
     it('should render finder after a succesfully login', () => {
         //        const spy = jest.spyOn(App.prototype, 'handleLogin');
-        const spyLogin = jest.spyOn(Api.prototype, 'login').mockImplementation(() => {
-            return true;
-        });
+        const spyLogin = jest.spyOn(Api.prototype, 'login')
+            .mockImplementation(() => {
+                return true;
+            });
+
+        const spyUserInfo = jest.spyOn(Api.prototype, 'userInfo')
+            .mockImplementation(() => {
+                const user = {
+                    name: 'User Loged',
+                    imagePath: 'user.png'
+                };
+
+                return user;
+            });
 
         render(<App Api={new Api()} />);
 
@@ -26,12 +37,16 @@ describe('App', () => {
 
         const password = screen.getByLabelText(/password/i);
         userEvent.type(password, '123AAaaaa');
-        
+
         const but = screen.getByText(/login/i, { selector: 'button' });
         userEvent.click(but);
         expect(spyLogin).toHaveBeenCalled();
+        expect(spyUserInfo).toBeCalled();
 
         const finder = screen.getAllByLabelText(/find/i);
         expect(finder.length).toBeGreaterThan(0);
+
+        const user = screen.getByAltText(/user loged/i);
+        expect(user).toBeVisible();
     });
 });

@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Finder.scss';
+
 class Finder extends React.Component {
     render() {
         return (

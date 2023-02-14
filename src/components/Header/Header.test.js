@@ -10,4 +10,15 @@ describe('Header', () => {
         const logo = screen.getByTitle(/our watched movies/i);
         expect(logo).toBeVisible();
     });
+
+    it('should render the user', () => {
+        const user = {
+            name: 'User Loged',
+            imagePath: 'user.png'
+        };
+        render(<Header User={user} />);
+
+        const img = screen.getByAltText(/user loged/i);
+        expect(img).toBeVisible();
+    });
 });
