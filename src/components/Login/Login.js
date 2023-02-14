@@ -4,7 +4,7 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            formChanged: true,
+            formChanged: false,
             validEmail: false,
             validPassword: false
         };
@@ -27,7 +27,10 @@ class Login extends React.Component {
     }
 
     submit() {
-        if (this.state.validEmail && this.state.validPassword) this.props.onSubmit();
+
+        if (this.state.validEmail && this.state.validPassword) {
+            this.props.onSubmit();
+        }
     }
 
     render() {
