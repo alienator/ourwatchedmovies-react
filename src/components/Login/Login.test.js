@@ -6,7 +6,7 @@ import userEvent from '@testing-library/user-event';
 
 describe('Login form', () => {
     it('should render the login form', () => {
-        render(<Login />);
+      render(<Login />);
 
         const form = screen.getAllByText(/login/i);
         expect(form[0]).toBeVisible();
@@ -26,5 +26,21 @@ describe('Login form', () => {
 
         const passwordError = screen.getByText(/password must be 7 chars long/i);
         expect(passwordError).toBeVisible();
+    });
+
+    it('should submit the form only if is valid', () => {
+        const spy = jest.fn();
+        render(<Login onSubmit={() => spy()}/>);
+        
+        const emailInput = screen.getByLabelText(/email/i);
+        userEvent.type(emailInput, 'user@user.com');
+
+        const passwordInput = screen.getByLabelText(/password/i);
+        userEvent.type(passwordInput, 'user123AA');
+
+        const but = screen.getByText(/login/i, {selector: 'button'});
+        userEvent.click(but);
+
+        expect(spy).toBeCalled();        
     });
 });

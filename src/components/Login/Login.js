@@ -15,7 +15,7 @@ class Login extends React.Component {
 
         const pattern = /^\w+[\.]*[\w]*@\w*\.\w{2,3}$/;
         const result = (value.match(pattern)) ? true : false;
-        if (result == false) this.setState({ validEmail: false });
+        this.setState({ validEmail: result });
     }
 
     validatePassword(value) {
@@ -23,7 +23,11 @@ class Login extends React.Component {
 
         const pattern = /^.*(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
         const result = (value.match(pattern)) ? true : false;
-        if (result == false) this.setState({ validPassword: false });
+        this.setState({validPassword: result});
+    }
+
+    submit() {
+        if (this.state.validEmail && this.state.validPassword) this.props.onSubmit();
     }
 
     render() {
@@ -43,6 +47,7 @@ class Login extends React.Component {
                             Email must be a valid email
                         </div>
                     }
+                    
                     <label>
                         Password *
                         <input
@@ -56,7 +61,9 @@ class Login extends React.Component {
                         </div>
                     }
 
-                    <button type="submit">login</button>
+                    <button
+                        type="button"
+                        onClick={() => this.submit()}>login</button>
                 </div>
             </form>
         );
