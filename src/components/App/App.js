@@ -11,7 +11,8 @@ class App extends React.Component {
         super(props);
         this.state = {
             userLoged: false,
-            userInfo: null
+            userInfo: null,
+            results: []
         };
     }
 
@@ -39,6 +40,9 @@ class App extends React.Component {
 
                 {this.state.userLoged &&
                  <Finder onFind={(what, where) => this.handleFind(what, where)}/>}
+
+                {this.state.userLoged && this.state.results &&
+                 <Results Results={this.state.results}/>}
             </>
         );
     }
