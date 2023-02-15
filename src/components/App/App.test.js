@@ -70,32 +70,32 @@ describe('App', () => {
         expect(user).toBeVisible();
     });
 
-    // it('should show results for a search', () => {
-    //     jest.spyOn(api, 'find')
-    //         .mockImplementation(() => {
-    //             return [
-    //                 {
-    //                     id: 'MOVIE1',
-    //                     title: 'Movie1',
-    //                     imagePath: 'movie.png',
-    //                     summary: 'some movie'
-    //                 },
-    //                 {
-    //                     id: 'MOVIE1',
-    //                     title: 'Movie1',
-    //                     imagePath: 'movie.png',
-    //                     summary: 'some movie'
-    //                 },
-    //             ];
-    //         });
+    it('should show results for a search', () => {
+        jest.spyOn(api, 'find')
+            .mockImplementation(() => {
+                return [
+                    {
+                        id: 'MOVIE1',
+                        title: 'Movie1',
+                        imagePath: 'movie.png',
+                        summary: 'some movie'
+                    },
+                    {
+                        id: 'MOVIE1',
+                        title: 'Movie1',
+                        imagePath: 'movie.png',
+                        summary: 'some movie'
+                    },
+                ];
+            });
 
-    //     const findWhat = screen.getByLabelText(/what/i);
-    //     userEvent.type(findWhat, 'ghost');
+        const findWhat = screen.getByLabelText(/what/i);
+        userEvent.type(findWhat, 'ghost');
 
-    //     const findBut = screen.getByText(/find/i, { selector: 'button' });
-    //     userEvent.click(findBut);
+        const findBut = screen.getByText(/find/i, { selector: 'button' });
+        userEvent.click(findBut);
 
-    //     const results = screen.getAllByText(/movie/i);
-    //     expect(results.length).toBeGreaterThan(0);
-    // });
+        const results = screen.getAllByText(/some movie/i);
+        expect(results.length).toBeGreaterThan(0);
+    });
 });

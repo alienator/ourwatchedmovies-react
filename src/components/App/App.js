@@ -3,6 +3,7 @@ import React from 'react';
 import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Finder from '../Finder/Finder';
+import Results from '../Results/Results';
 
 import './App.scss';
 
@@ -17,7 +18,8 @@ class App extends React.Component {
     }
 
     handleFind(what, where) {
-        this.props.Api.find(what, where);
+        const results =  this.props.Api.find(what, where);
+        this.setState({results: results});
     }
     
     handleLogin() {
@@ -41,7 +43,7 @@ class App extends React.Component {
                 {this.state.userLoged &&
                  <Finder onFind={(what, where) => this.handleFind(what, where)}/>}
 
-                {this.state.userLoged && this.state.results &&
+                {this.state.userLoged && this.state.results.length > 0 &&
                  <Results Results={this.state.results}/>}
             </>
         );
