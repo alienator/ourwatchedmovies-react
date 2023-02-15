@@ -15,6 +15,11 @@ class Api {
     }
 
     find(what, where) {
+        return [
+            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
+            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
+            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
+        ];
     }
 };
 

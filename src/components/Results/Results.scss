@@ -1,0 +1,40 @@
+ul#results {
+    background-color: #FFF;
+    padding: 2rem;
+}
+
+ul#results li:hover {
+    transition: .3s;
+    -webkit-box-shadow: 4px 4px 5px 0px rgba(207,163,207,1);
+    -moz-box-shadow: 4px 4px 5px 0px rgba(207,163,207,1);
+    box-shadow: 4px 4px 5px 0px rgba(207,163,207,1);
+    cursor: pointer;
+}
+
+ul#results li {
+    list-style-type: none;
+    margin-bottom: 1rem;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+ul#results .movie {
+    position: relative;
+}
+
+ul#results .movie .image {
+    width: 14%;
+    display: inline-block;
+}
+
+ul#results .movie .image img {
+    width: 100%;
+}
+
+ul#results .movie .desc {
+    display: inline-block;
+    width: 86%;
+    position: absolute;
+    top: 0;
+    padding: 0 .6rem;
+}

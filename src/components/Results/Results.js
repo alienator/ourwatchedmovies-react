@@ -1,6 +1,7 @@
 import React from 'react';
 
 import Movie from './Movie';
+import './Results.scss';
 
 class Results extends React.Component {
     constructor(props) {
@@ -17,9 +18,9 @@ class Results extends React.Component {
         });
 
         return (
-            <div id='results'>
+            <ul id='results'>
                 {movies}
-            </div>
+            </ul>
         );
     }
 }

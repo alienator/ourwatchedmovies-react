@@ -3,7 +3,7 @@ function Movie(movie) {
     return (
         <div className="movie">
             <div className="image">
-                <img src={movie.imagePaeth} />
+                <img src={movie.imagePath} title={movie.title} alt={movie.title} />
             </div>
             <div className="desc">
                 <h3>{movie.title}</h3>
