@@ -4,6 +4,9 @@ class Api {
 
     userInfo() {
     }
+
+    find() {
+    }
 }
 
 export default Api;

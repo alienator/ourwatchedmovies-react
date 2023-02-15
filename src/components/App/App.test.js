@@ -49,4 +49,45 @@ describe('App', () => {
         const user = screen.getByAltText(/user loged/i);
         expect(user).toBeVisible();
     });
+
+    it('should handle the find', () => {
+        const spyLogin = jest.spyOn(Api.prototype, 'login')
+            .mockImplementation(() => {
+                return true;
+            });
+
+        const spyUserInfo = jest.spyOn(Api.prototype, 'userInfo')
+            .mockImplementation(() => {
+                const user = {
+                    name: 'User Loged',
+                    imagePath: 'user.png'
+                };
+
+                return user;
+            });
+
+        const spy = jest.spyOn(Api.prototype, 'find')
+            .mockImplementation(() => { return ''; });
+
+        render(<App Api={new Api()} />);
+
+        const email = screen.getByLabelText(/email/i);
+        userEvent.type(email, 'u@u.com');
+
+        const password = screen.getByLabelText(/password/i);
+        userEvent.type(password, '123AAaaaa');
+
+        const but = screen.getByText(/login/i, { selector: 'button' });
+        userEvent.click(but);
+        expect(spyLogin).toHaveBeenCalled();
+        expect(spyUserInfo).toBeCalled();
+
+        const findWhat = screen.getByLabelText(/what/i);
+        userEvent.type(findWhat, 'ghost');
+
+        const findBut = screen.getByText(/find/i, { selector: 'button' });
+        userEvent.click(findBut);
+
+        expect(spy).toBeCalled();
+    });
 });

@@ -14,6 +14,10 @@ class App extends React.Component {
             userInfo: null
         };
     }
+
+    handleFind(what, where) {
+        this.props.Api.find(what, where);
+    }
     
     handleLogin() {
         const res = this.props.Api.login();
@@ -34,7 +38,7 @@ class App extends React.Component {
                  <Login onSubmit={() => this.handleLogin()}/>}
 
                 {this.state.userLoged &&
-                 <Finder />}
+                 <Finder onFind={(what, where) => this.handleFind(what, where)}/>}
             </>
         );
     }

@@ -13,6 +13,9 @@ class Api {
             imagePath: 'user.jpg'
         };
     }
+
+    find(what, where) {
+    }
 };
 
 const api = new Api();
