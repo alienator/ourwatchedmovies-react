@@ -7,6 +7,9 @@ class Api {
 
     find() {
     }
+
+    movieDetails() {
+    }
 }
 
 export default Api;

@@ -70,7 +70,7 @@ describe('App', () => {
         expect(user).toBeVisible();
     });
 
-    it('should show results for a search', () => {
+    function t1() {
         jest.spyOn(api, 'find')
             .mockImplementation(() => {
                 return [
@@ -81,8 +81,8 @@ describe('App', () => {
                         summary: 'some movie'
                     },
                     {
-                        id: 'MOVIE1',
-                        title: 'Movie1',
+                        id: 'MOVIE2',
+                        title: 'Movie2',
                         imagePath: 'movie.png',
                         summary: 'some movie'
                     },
@@ -97,5 +97,61 @@ describe('App', () => {
 
         const results = screen.getAllByText(/some movie/i);
         expect(results.length).toBeGreaterThan(0);
+
+    }
+
+    it('should show results for a search', () => {
+        // jest.spyOn(api, 'find')
+        //     .mockImplementation(() => {
+        //         return [
+        //             {
+        //                 id: 'MOVIE1',
+        //                 title: 'Movie1',
+        //                 imagePath: 'movie.png',
+        //                 summary: 'some movie'
+        //             },
+        //             {
+        //                 id: 'MOVIE1',
+        //                 title: 'Movie1',
+        //                 imagePath: 'movie.png',
+        //                 summary: 'some movie'
+        //             },
+        //         ];
+        //     });
+
+        // const findWhat = screen.getByLabelText(/what/i);
+        // userEvent.type(findWhat, 'ghost');
+
+        // const findBut = screen.getByText(/find/i, { selector: 'button' });
+        // userEvent.click(findBut);
+
+        // const results = screen.getAllByText(/some movie/i);
+        // expect(results.length).toBeGreaterThan(0);
+        t1();
+    });
+
+    it('should show details for a movie', () => {
+        t1();
+        const a = jest.spyOn(api, 'movieDetails')
+            .mockImplementation(() => {
+                return (
+                    {
+                        id: 'AA',
+                        title: 'Movie 1',
+                        summary: 'something',
+                        globalScore: 3.4,
+                        releaseDate: 2009,
+                        ourScore: 0.0,
+                        watchedDate: ''
+                    }
+                );
+            });
+
+        const movie1 = screen.getByText(/movie1/i);
+        userEvent.click(movie1);
+        expect(a).toBeCalled();
+        
+        const details = screen.getByText(/something/i);
+        expect(details).toBeVisible();
     });
 });

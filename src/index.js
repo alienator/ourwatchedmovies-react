@@ -21,6 +21,21 @@ class Api {
             {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
         ];
     }
+
+    movieDetails() {
+        return (
+            {
+                id: 'AABB11',
+                title: 'Movie 1',
+                imagePath: 'movie.jpg',
+                summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing eli',
+                releaseDate: '2008',
+                globalScore: 3.3,
+                ourScore: 0.0,
+                watchedDate: '2009'
+            }
+        );
+    }
 };
 
 const api = new Api();

@@ -11,16 +11,19 @@ class Results extends React.Component {
     render() {
         const movies = this.props.Results.map((movie, index) => {
             return (
-                <li key={index}>
-                    <Movie Movie={movie} />
-                </li>
+                <a
+                    key={index}
+                    href="#"
+                    onClick={() => this.props.Details()}>
+                    <Movie Movie={movie} Details={() => this.props.Details()}/>
+                </a>
             );
         });
 
         return (
-            <ul id='results'>
+            <div id='results'>
                 {movies}
-            </ul>
+            </div>
         );
     }
 }

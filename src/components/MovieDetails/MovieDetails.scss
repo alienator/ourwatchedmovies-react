@@ -1,0 +1,33 @@
+#movie-details {
+    position: relative;
+    background-color: #fff;
+}
+
+#movie-details .image {
+    display: inline-block;
+    width: 20%;
+}
+
+#movie-details .image img {
+    width: 100%;
+}
+
+#movie-details .desc {
+     position: absolute;
+    // top: 0;
+    // left: 6rem;
+    display: inline-block;
+    width: 70%;
+    padding: 0 1rem;
+}
+
+#movie-details .desc h2 {
+    background-color: inherit;
+    color: inherit;
+    padding: 0;
+    text-align: left;
+}
+
+#movie-details .desc span {
+    margin-right: .8rem;
+}
