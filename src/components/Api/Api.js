@@ -10,6 +10,9 @@ class Api {
 
     movieDetails() {
     }
+
+    addMovie() {
+    }
 }
 
 export default Api;

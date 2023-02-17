@@ -3,6 +3,19 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
 
 class Api {
+    details =  {
+        id: 'AABB11',
+        title: 'Movie 1',
+        imagePath: 'movie.jpg',
+        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing eli',
+        releaseDate: '2008',
+        globalScore: 3.3,
+        ourScore: 0.0,
+        watchedDate: ''
+    };
+
+    comments = [];
+    
     login() {
         return true;
     }
@@ -23,18 +36,15 @@ class Api {
     }
 
     movieDetails() {
-        return (
-            {
-                id: 'AABB11',
-                title: 'Movie 1',
-                imagePath: 'movie.jpg',
-                summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing eli',
-                releaseDate: '2008',
-                globalScore: 3.3,
-                ourScore: 0.0,
-                watchedDate: '2009'
-            }
-        );
+        return this.details;
+    }
+
+    addMovie(d, m) {
+        this.details.watchedDate = d.watchedDate;
+        this.details.ourScore = d.score;
+        this.comments.push(d.comment);
+        
+        return true;
     }
 };
 

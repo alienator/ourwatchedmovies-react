@@ -5,7 +5,7 @@ import Login from '../Login/Login';
 import Finder from '../Finder/Finder';
 import Results from '../Results/Results';
 import MovieDetails from '../MovieDetails/MovieDetails';
-
+import ModalAddMovie from '../MovieDetails/ModalAddMovie';
 import './App.scss';
 
 class App extends React.Component {
@@ -15,10 +15,24 @@ class App extends React.Component {
             userLoged: false,
             userInfo: null,
             results: [],
-            movieDetails: null
+            movieDetails: null,
+            showModalAddMovie: false
         };
     }
 
+    handleAddMovieSubmit(data) {
+        const res = this.props.Api.addMovie(data, this.state.movieDetails);
+        if (res) {
+            this.setState({showModalAddMovie: false,
+                           movieDetails: this.state.movieDetails});
+        }
+
+    }
+    
+    handleAddMovie() {
+        this.setState({showModalAddMovie: true});
+    }
+    
     handleDetails(id) {
         const movie = this.props.Api.movieDetails(id);
         this.setState({movieDetails: movie});
@@ -60,7 +74,12 @@ class App extends React.Component {
 
                 {this.state.userLoged &&
                  this.state.movieDetails &&                 
-                 <MovieDetails Details={this.state.movieDetails}/>}
+                 <MovieDetails
+                     Details={this.state.movieDetails}
+                     handleAddMovie={() => this.handleAddMovie() }/>}
+
+                {this.state.userLoged && this.state.showModalAddMovie &&
+                 <ModalAddMovie onSubmit={(data) => this.handleAddMovieSubmit(data)}/>}
             </>
         );
     }

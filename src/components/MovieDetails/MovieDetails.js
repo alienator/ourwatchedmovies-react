@@ -7,6 +7,10 @@ class MovieDetails extends React.Component {
         super(props);
     }
 
+    addMovie() {
+        this.props.handleAddMovie(this.props.Details);
+    }
+    
     render() {
         return (
             <div id="movie-details">
@@ -27,7 +31,10 @@ class MovieDetails extends React.Component {
 
                         {!this.props.Details.watchedDate &&
                             <>
-                                <button type='button'>add to our watched movies</button>
+                                <button
+                                    type='button'
+                                    onClick={() => this.addMovie()}>
+                                add to our watched movies</button>
                             </>
                         }
                     </div>
