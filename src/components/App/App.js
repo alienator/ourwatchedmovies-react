@@ -7,6 +7,7 @@ import Results from '../Results/Results';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import ModalAddMovie from '../MovieDetails/ModalAddMovie';
 import Comments from '../Comment/Comments';
+import ModalComment from '../Comment/ModalComment';
 import './App.scss';
 
 class App extends React.Component {
@@ -18,12 +19,19 @@ class App extends React.Component {
             results: [],
             movieDetails: null,
             showModalAddMovie: false,
-            comments: []
+            comments: [],
+            showModalComment: false
         };
     }
 
     handleAddComment() {
-        this.setState({showModalAddComment: true});
+        this.setState({showModalComment: true});
+    }
+
+    handleSubmitComment(data) {
+        this.props.Api.saveComment(data);
+        this.setState({showModalComment: false,
+                       movieDetails: this.state.movieDetails});
     }
     
     handleAddMovieSubmit(data) {
@@ -91,6 +99,9 @@ class App extends React.Component {
 
                 {this.state.userLoged && this.state.showModalAddMovie &&
                  <ModalAddMovie onSubmit={(data) => this.handleAddMovieSubmit(data)}/>}
+
+                {this.state.userLoged && this.state.showModalComment &&
+                 <ModalComment onSubmit={(data) => this.handleSubmitComment(data)}/>}
             </>
         );
     }

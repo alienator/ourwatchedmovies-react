@@ -7,8 +7,8 @@ class Api {
         name: 'User Loged 1',
         imagePath: 'user.jpg'
     };
-    
-    details =  {
+
+    details = {
         id: 'AABB11',
         title: 'Movie 1',
         imagePath: 'movie.jpg',
@@ -18,9 +18,9 @@ class Api {
         ourScore: 0.0,
         watchedDate: ''
     };
-    
+
     comments = [];
-    
+
     login() {
         return true;
     }
@@ -31,9 +31,9 @@ class Api {
 
     find(what, where) {
         return [
-            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
-            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
-            {id: 'AAA', title:'Movie1', summary:'something', imagePath: 'movie.jpg'},
+            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
+            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
+            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
         ];
     }
 
@@ -47,24 +47,34 @@ class Api {
 
         let c = {
             comment: d.comment,
-            creationDate: Date.now(),
+            creationDate: (new Date).toLocaleString('en-GB'),
             user: this.user,
         };
-        
+
         this.comments.push(c);
-        
+
         return true;
     }
 
     movieComments(id) {
         return this.comments;
     }
+
+    saveComment(d) {
+        let c = {
+            comment: d,
+            creationDate: (new Date).toLocaleString('en-GB'),
+            user: this.user,
+        };
+
+        this.comments.push(c);
+    }
 };
 
 const api = new Api();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-      <App Api={api}/>
-  </React.StrictMode>
+    <React.StrictMode>
+        <App Api={api} />
+    </React.StrictMode>
 );

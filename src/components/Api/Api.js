@@ -13,6 +13,9 @@ class Api {
 
     addMovie() {
     }
+
+    saveComment() {
+    }
 }
 
 export default Api;
