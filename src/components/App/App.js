@@ -6,6 +6,7 @@ import Finder from '../Finder/Finder';
 import Results from '../Results/Results';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import ModalAddMovie from '../MovieDetails/ModalAddMovie';
+import Comments from '../Comment/Comments';
 import './App.scss';
 
 class App extends React.Component {
@@ -16,17 +17,21 @@ class App extends React.Component {
             userInfo: null,
             results: [],
             movieDetails: null,
-            showModalAddMovie: false
+            showModalAddMovie: false,
+            comments: []
         };
     }
 
+    handleAddComment() {
+        this.setState({showModalAddComment: true});
+    }
+    
     handleAddMovieSubmit(data) {
         const res = this.props.Api.addMovie(data, this.state.movieDetails);
         if (res) {
             this.setState({showModalAddMovie: false,
                            movieDetails: this.state.movieDetails});
         }
-
     }
     
     handleAddMovie() {
@@ -35,7 +40,8 @@ class App extends React.Component {
     
     handleDetails(id) {
         const movie = this.props.Api.movieDetails(id);
-        this.setState({movieDetails: movie});
+        const comments = this.props.Api.movieComments(id);
+        this.setState({movieDetails: movie, comments: comments});
     }
     
     handleFind(what, where) {
@@ -77,6 +83,11 @@ class App extends React.Component {
                  <MovieDetails
                      Details={this.state.movieDetails}
                      handleAddMovie={() => this.handleAddMovie() }/>}
+
+                {this.state.userLoged && this.state.comments.length > 0 &&
+                 <Comments
+                     comments={this.state.comments}
+                     handleAddComment={() => this.handleAddComment()}/>}
 
                 {this.state.userLoged && this.state.showModalAddMovie &&
                  <ModalAddMovie onSubmit={(data) => this.handleAddMovieSubmit(data)}/>}

@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
 
 class Api {
+    user = {
+        name: 'User Loged 1',
+        imagePath: 'user.jpg'
+    };
+    
     details =  {
         id: 'AABB11',
         title: 'Movie 1',
@@ -13,7 +18,7 @@ class Api {
         ourScore: 0.0,
         watchedDate: ''
     };
-
+    
     comments = [];
     
     login() {
@@ -21,10 +26,7 @@ class Api {
     }
 
     userInfo() {
-        return {
-            name: 'User Loged 1',
-            imagePath: 'user.jpg'
-        };
+        return this.user;
     }
 
     find(what, where) {
@@ -42,9 +44,20 @@ class Api {
     addMovie(d, m) {
         this.details.watchedDate = d.watchedDate;
         this.details.ourScore = d.score;
-        this.comments.push(d.comment);
+
+        let c = {
+            comment: d.comment,
+            creationDate: Date.now(),
+            user: this.user,
+        };
+        
+        this.comments.push(c);
         
         return true;
+    }
+
+    movieComments(id) {
+        return this.comments;
     }
 };
 

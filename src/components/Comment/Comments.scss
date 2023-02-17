@@ -1,0 +1,61 @@
+#comments {
+    background-color: #FFF;
+    padding: .5rem;
+}
+
+#comments .add {
+    text-align: right;
+    margin-bottom: .2rem;
+}
+
+#comments .add button {
+    margin: inherit;
+    padding: .2rem .5rem;
+    display: inline;
+}
+
+.comment {
+    padding: .2rem;
+    border: 1px solid #000;
+}
+    
+.comment .image {
+    display: inline-block;
+    width: 20%;
+}
+
+.comment .image img {
+    width: 100%;
+}
+
+.comment .desc {
+    position: absolute;
+    display: inline-block;
+    width: 60%;
+    padding: 0 1rem;
+}
+
+.comment .desc p {
+    margin: 0;
+}
+
+.comment .actions {
+    display: inline-block;
+    position: absolute;
+    width: 20%;
+    right: 0;
+    text-align: center;
+}
+
+.comment button {
+    margin: inherit;
+    padding: .2rem 1rem;
+    font-size: 1rem;
+    display: inline-block;
+    margin-top: .6rem;
+}
+
+.comment span {
+    display: block;
+    font-size: .8rem;
+}
