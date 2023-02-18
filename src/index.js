@@ -46,7 +46,9 @@ class Api {
         this.details.ourScore = d.score;
 
         let c = {
+            id: this.comments.length + 1,
             comment: d.comment,
+            editable: true,
             creationDate: (new Date).toLocaleString('en-GB'),
             user: this.user,
         };
@@ -60,14 +62,23 @@ class Api {
         return this.comments;
     }
 
-    saveComment(d) {
+    saveComment(d, id = 0) {
+        const i = (id > 0) ? id : this.comments.length + 1;
         let c = {
+            id: i,
             comment: d,
+            editable: true,
             creationDate: (new Date).toLocaleString('en-GB'),
             user: this.user,
         };
 
-        this.comments.push(c);
+        if (id == 0)
+            this.comments.push(c);
+        else  {
+            const o = this.comments.find(c => c.id==i);
+            const index = this.comments.indexOf(o);
+            this.comments.splice(index, 1, c);
+        }
     }
 };
 

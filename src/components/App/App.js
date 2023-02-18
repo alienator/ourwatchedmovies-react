@@ -20,43 +20,54 @@ class App extends React.Component {
             movieDetails: null,
             showModalAddMovie: false,
             comments: [],
-            showModalComment: false
+            showModalComment: false,
+            currentComment: null
         };
     }
 
+    handleEditComment(comment) {
+        this.setState({ showModalComment: true, currentComment: comment });
+    }
+
     handleAddComment() {
-        this.setState({showModalComment: true});
+        this.setState({currentComment: null})
+        this.setState({ showModalComment: true });
     }
 
     handleSubmitComment(data) {
-        this.props.Api.saveComment(data);
-        this.setState({showModalComment: false,
-                       movieDetails: this.state.movieDetails});
+        const id = (this.state.currentComment) ? this.state.currentComment.id : 0;
+        this.props.Api.saveComment(data, id);
+        this.setState({
+            showModalComment: false,
+            movieDetails: this.state.movieDetails
+        });
     }
-    
+
     handleAddMovieSubmit(data) {
         const res = this.props.Api.addMovie(data, this.state.movieDetails);
         if (res) {
-            this.setState({showModalAddMovie: false,
-                           movieDetails: this.state.movieDetails});
+            this.setState({
+                showModalAddMovie: false,
+                movieDetails: this.state.movieDetails
+            });
         }
     }
-    
+
     handleAddMovie() {
-        this.setState({showModalAddMovie: true});
+        this.setState({ showModalAddMovie: true });
     }
-    
+
     handleDetails(id) {
         const movie = this.props.Api.movieDetails(id);
         const comments = this.props.Api.movieComments(id);
-        this.setState({movieDetails: movie, comments: comments});
+        this.setState({ movieDetails: movie, comments: comments });
     }
-    
+
     handleFind(what, where) {
-        const results =  this.props.Api.find(what, where);
-        this.setState({results: results});
+        const results = this.props.Api.find(what, where);
+        this.setState({ results: results });
     }
-    
+
     handleLogin() {
         const res = this.props.Api.login();
         if (res) {
@@ -66,42 +77,46 @@ class App extends React.Component {
             });
         }
     }
-    
+
     render() {
         return (
             <>
-                <Header User={this.state.userInfo}/>
-                
+                <Header User={this.state.userInfo} />
+
                 {!this.state.userLoged &&
-                 <Login onSubmit={() => this.handleLogin()}/>}
+                    <Login onSubmit={() => this.handleLogin()} />}
 
                 {this.state.userLoged &&
-                 !this.state.movieDetails && 
-                 <Finder onFind={(what, where) => this.handleFind(what, where)}/>}
+                    !this.state.movieDetails &&
+                    <Finder onFind={(what, where) => this.handleFind(what, where)} />}
 
                 {this.state.userLoged &&
-                 this.state.results.length > 0 &&
-                 !this.state.movieDetails && 
-                 <Results
-                     Results={this.state.results}
-                     Details={(id) => this.handleDetails(id)}/>}
+                    this.state.results.length > 0 &&
+                    !this.state.movieDetails &&
+                    <Results
+                        Results={this.state.results}
+                        Details={(id) => this.handleDetails(id)} />}
 
                 {this.state.userLoged &&
-                 this.state.movieDetails &&                 
-                 <MovieDetails
-                     Details={this.state.movieDetails}
-                     handleAddMovie={() => this.handleAddMovie() }/>}
+                    this.state.movieDetails &&
+                    <MovieDetails
+                        Details={this.state.movieDetails}
+                        handleAddMovie={() => this.handleAddMovie()} />}
 
                 {this.state.userLoged && this.state.comments.length > 0 &&
-                 <Comments
-                     comments={this.state.comments}
-                     handleAddComment={() => this.handleAddComment()}/>}
+                    <Comments
+                        comments={this.state.comments}
+                        handleAddComment={() => this.handleAddComment()}
+                        handleEditComment={(comment) => this.handleEditComment(comment)} />}
 
                 {this.state.userLoged && this.state.showModalAddMovie &&
-                 <ModalAddMovie onSubmit={(data) => this.handleAddMovieSubmit(data)}/>}
+                    <ModalAddMovie onSubmit={(data) => this.handleAddMovieSubmit(data)} />}
 
                 {this.state.userLoged && this.state.showModalComment &&
-                 <ModalComment onSubmit={(data) => this.handleSubmitComment(data)}/>}
+                    <ModalComment
+                        onSubmit={(data) => this.handleSubmitComment(data)}
+                        comment={this.state.currentComment}
+                    />}
             </>
         );
     }

@@ -21,8 +21,13 @@ class Comment extends React.Component {
                 </div>
                 <div className='actions'>
                     <span>Date: {this.props.comment.creationDate}</span>
-                    <button
-                        type='button'>edit</button>
+                    {this.props.comment.editable &&
+                        <button
+                            type='button'
+                            onClick={() => {
+                                this.props.handleEditComment(this.props.comment)
+                            }
+                            }>edit</button>}
 
                 </div>
             </div>

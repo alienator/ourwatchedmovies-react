@@ -15,7 +15,9 @@ class Comments extends React.Component {
                         onClick={() => this.props.handleAddComment()}>add comment</button>
                 </div>
                 {this.props.comments.map((comment, key) =>
-                    <Comment comment={comment}  key={key}/>)}
+                    <Comment
+                        comment={comment}
+                        handleEditComment={(comment) => this.props.handleEditComment(comment)} key={key}/>)}
             </div>
         );
     }
