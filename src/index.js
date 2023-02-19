@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
+//import CommentData from './components/Comment/';
 
 class Api {
     user = {
@@ -62,23 +63,23 @@ class Api {
         return this.comments;
     }
 
-    saveComment(d, id = 0) {
-        const i = (id > 0) ? id : this.comments.length + 1;
-        let c = {
-            id: i,
-            comment: d,
-            editable: true,
-            creationDate: (new Date).toLocaleString('en-GB'),
-            user: this.user,
-        };
+    saveComment(d) {
+        const id = d.id;
+        const i = (d.id > 0) ? d.id : this.comments.length + 1;
+        d.id = i;
+        d.editable = true;
+        d.user = this.user;
+        d.creationDate = (new Date).toLocaleString('en-GB'); 
 
         if (id == 0)
-            this.comments.push(c);
+            this.comments.push(d);
         else  {
-            const o = this.comments.find(c => c.id==i);
+            const o = this.comments.find(d => d.id==i);
             const index = this.comments.indexOf(o);
-            this.comments.splice(index, 1, c);
+            this.comments.splice(index, 1, d);
         }
+
+        console.log('comments', this.comments);
     }
 };
 

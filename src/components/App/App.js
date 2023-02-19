@@ -7,6 +7,7 @@ import Results from '../Results/Results';
 import MovieDetails from '../MovieDetails/MovieDetails';
 import ModalAddMovie from '../MovieDetails/ModalAddMovie';
 import Comments from '../Comment/Comments';
+import CommentData from '../Comment/CommentData';
 import ModalComment from '../Comment/ModalComment';
 import './App.scss';
 
@@ -30,13 +31,14 @@ class App extends React.Component {
     }
 
     handleAddComment() {
-        this.setState({currentComment: null})
-        this.setState({ showModalComment: true });
+        let c = new CommentData();
+        c.movieId = this.state.movieDetails.id;
+        this.setState({currentComment: c, 
+                       showModalComment: true });
     }
 
     handleSubmitComment(data) {
-        const id = (this.state.currentComment) ? this.state.currentComment.id : 0;
-        this.props.Api.saveComment(data, id);
+        this.props.Api.saveComment(data);
         this.setState({
             showModalComment: false,
             movieDetails: this.state.movieDetails

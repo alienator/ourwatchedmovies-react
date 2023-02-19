@@ -1,7 +1,8 @@
 import React from 'react';
 
 class ModalComment extends React.Component {
-    c = (this.props.comment) ? this.props.comment.comment : '';
+    //    c = (this.props.comment) ? this.props.comment.comment : '';
+    
     
     constructor(props) {
         super(props);
@@ -12,11 +13,12 @@ class ModalComment extends React.Component {
     }
 
     changeComment(value) {
-        this.setState({ comment: value });
+        //        this.setState({ comment: value });
+        this.props.comment.comment = value;
     }
 
     handleSubmit() {
-        this.props.onSubmit(this.state.comment);
+        this.props.onSubmit(this.props.comment);
     }
 
     render() {
