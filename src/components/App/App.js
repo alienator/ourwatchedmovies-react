@@ -17,7 +17,7 @@ export default class App extends React.Component {
         super(props);
 
         this.state = {
-            user: null,
+            user: this.props.user,
             findResults: [],
             currentMovie: null,
             showModalAddMovie: false,
@@ -26,16 +26,22 @@ export default class App extends React.Component {
         };
     }
 
-    showModalComment(comment = new CommentData()) {        
+    gotoFinder() {
+        this.setState({currentMovie: null});
+    }
+    
+    showModalComment(comment = new CommentData()) {
         this.setState({ currentComment: comment, showModalComment: true });
     }
 
     saveComment(data) {
-        this.props.Api.saveComment(this.state.currentMovie, this.state.user, data);
+        this.props.Api.saveComment(
+            this.state.currentMovie,
+            this.state.user, data);
         this.state.showModalComment = false;
-        this.showDetails(this.state.currentMovie.id);        
+        this.showDetails(this.state.currentMovie.id);
     }
-    
+
     addMovie(data) {
         this.props.Api.addMovie(this.state.currentMovie, this.state.user, data);
         this.state.showModalAddMovie = false;
@@ -70,10 +76,19 @@ export default class App extends React.Component {
         );
     }
 
+    handleGetScores() {
+        const userId = this.state.user.id;
+        const movieId = this.state.currentMovie.id;
+        const scores = this.props.Api.getScores(movieId);
+        
+        return scores;
+    }
+
     renderFinder() {
         return (
             <>
-                <Finder onFind={(what, where) => this.handleFind(what, where)} />
+                <Finder
+                    onFind={(what, where) => this.handleFind(what, where)} />
                 {(this.state.findResults.length > 0) ?
                     <Results Results={this.state.findResults}
                         Details={(id) => this.showDetails(id)} /> : null}
@@ -86,12 +101,17 @@ export default class App extends React.Component {
             <>
                 <MovieDetails
                     Details={this.state.currentMovie}
-                    handleAddMovie={() => this.handleAddMovie()} />
+                    handleAddMovie={() => this.handleAddMovie()}
+                    getScores={() => this.handleGetScores()}
+                    handleSaveScore={(s) => this.props.Api.saveScore(s)}
+                />
                 {this.state.currentMovie.watchedDate &&
                     <Comments
                         comments={this.state.comments}
                         handleAddComment={() => { this.showModalComment() }}
-                        handleEditComment={(comment) => this.showModalComment(comment)}
+                        handleEditComment={
+                            (comment) => this.showModalComment(comment)
+                        }
                     />}
             </>
 
@@ -108,16 +128,18 @@ export default class App extends React.Component {
 
         return (
             <>
-                <Header User={this.state.user} />
+                <Header
+                    User={this.state.user}
+                    gotoFinder={() => this.gotoFinder()} />
                 {!userLoged ? this.renderLogin() :
                     (inFinder) ? this.renderFinder() : this.renderDetails()}
                 {this.state.showModalAddMovie &&
                     <ModalAddMove onSubmit={(data) => this.addMovie(data)} />}
                 {this.state.showModalComment &&
-                 <ModalComment
-                     onSubmit={(data) => this.saveComment(data)}
-                     comment={this.state.currentComment}
-                 />}
+                    <ModalComment
+                        onSubmit={(data) => this.saveComment(data)}
+                        comment={this.state.currentComment}
+                    />}
 
             </>
         );
