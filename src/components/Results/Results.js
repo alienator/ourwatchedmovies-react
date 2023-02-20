@@ -14,7 +14,7 @@ class Results extends React.Component {
                 <a
                     key={index}
                     href="#"
-                    onClick={() => this.props.Details()}>
+                    onClick={() => this.props.Details(movie.id)}>
                     <Movie Movie={movie} Details={() => this.props.Details()}/>
                 </a>
             );

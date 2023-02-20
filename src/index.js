@@ -1,85 +1,114 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/App/App';
-//import CommentData from './components/Comment/';
 
 class Api {
+    comments = [];
+
     user = {
-        name: 'User Loged 1',
+        id: 1,
+        name: 'User 1',
         imagePath: 'user.jpg'
     };
 
-    details = {
-        id: 'AABB11',
-        title: 'Movie 1',
-        imagePath: 'movie.jpg',
-        summary: 'Lorem ipsum dolor sit amet, consectetur adipiscing eli',
-        releaseDate: '2008',
-        globalScore: 3.3,
-        ourScore: 0.0,
-        watchedDate: ''
-    };
+    movies = [
+        {
+            id: 'AAA1',
+            title: 'Movie1',
+            summary: 'something',
+            imagePath: 'movie.jpg',
+            globalScore: 5,
+            releaseDate: '2005',
+            watchedDate: '2009',
+            ourScore: 4
+        },
+        {
+            id: 'BBB1',
+            title: 'Movie2',
+            summary: 'something',
+            imagePath: 'movie.jpg',
+            globalScore: 3.6,
+            releaseDate: '1958',
+            watchedDate: '',
+            ourScore: 0
+        }, 
+        {
+            id: 'CCC1',
+            title: 'Movie3',
+            summary: 'something',
+            imagePath: 'movie.jpg',
+            globalScore: 3.6,
+            releaseDate: '1958',
+            watchedDate: '2010',
+            ourScore: 7.2
+        }, 
+    ];
 
-    comments = [];
-
-    login() {
-        return true;
+    saveComment(movie, user, data) {
+        const c = {
+            id: (data.id == 0) ? (this.comments.length + 1) : data.id,
+            comment: data.comment,
+            userId: user.id,
+            movieId: movie.id,
+            creationDate: (new Date).toLocaleDateString('en-GB')
+        };
+        
+        if (data.id > 0) {
+            const index = this.comments.findIndex(o => o.id == data.id);
+            this.comments.splice(index, 1, c);
+        } else {
+            this.comments.push(c);
+        }
     }
 
-    userInfo() {
+    addMovie(movie, user, data) {
+        movie.ourScore = data.score;
+        movie.watchedDate = data.watchedDate;
+        this.movies.push(movie);
+
+        if (data.comment) {
+            const c = {
+                id: this.comments.lenght + 1,
+                comment: data.comment,
+                userId: user.id,
+                movieId: movie.id,
+                creationDate: (new Date).toLocaleDateString('en-GB')
+            };
+
+            this.comments.push(c);
+        }
+    }
+
+    login(email, password) {
         return this.user;
     }
 
     find(what, where) {
-        return [
-            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
-            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
-            { id: 'AAA', title: 'Movie1', summary: 'something', imagePath: 'movie.jpg' },
-        ];
+        return this.movies;
     }
 
-    movieDetails() {
-        return this.details;
+    getMovieDetails(id) {
+        let movie = null;
+        this.movies.forEach((m) => {
+            if (m.id == id)  {
+                movie = m;
+                return;
+            }
+        });
+
+        return movie;
     }
 
-    addMovie(d, m) {
-        this.details.watchedDate = d.watchedDate;
-        this.details.ourScore = d.score;
-
-        let c = {
-            id: this.comments.length + 1,
-            comment: d.comment,
-            editable: true,
-            creationDate: (new Date).toLocaleString('en-GB'),
-            user: this.user,
-        };
-
-        this.comments.push(c);
-
-        return true;
-    }
-
-    movieComments(id) {
-        return this.comments;
-    }
-
-    saveComment(d) {
-        const id = d.id;
-        const i = (d.id > 0) ? d.id : this.comments.length + 1;
-        d.id = i;
-        d.editable = true;
-        d.user = this.user;
-        d.creationDate = (new Date).toLocaleString('en-GB'); 
-
-        if (id == 0)
-            this.comments.push(d);
-        else  {
-            const o = this.comments.find(d => d.id==i);
-            const index = this.comments.indexOf(o);
-            this.comments.splice(index, 1, d);
-        }
-
-        console.log('comments', this.comments);
+    getComments(id) {
+        let res = [];
+        this.comments.forEach((c) => {
+            if (c.movieId == id) {
+                c.user = this.user;
+                c.editable = true;
+                res.push(c);
+            }
+        });
+        return res;
     }
 };
 

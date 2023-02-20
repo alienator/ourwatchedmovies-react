@@ -6,36 +6,40 @@ class Login extends React.Component {
         this.state = {
             formChanged: false,
             validEmail: false,
-            validPassword: false
+            validPassword: false,
+            email: '',
+            password: ''
         };
     }
 
-    validateEmail(value) {
+    verifyEmail(value) {
         this.setState({ formChanged: true });
 
         const pattern = /^\w+[\.]*[\w]*@\w*\.\w{2,3}$/;
         const result = (value.match(pattern)) ? true : false;
-        this.setState({ validEmail: result });
+        this.setState({ validEmail: result, email: value });
     }
 
-    validatePassword(value) {
+    verifyPassword(value) {
         this.setState({ formChanged: true });
 
         const pattern = /^.*(?=.{7,})(?=.*[a-z])(?=.*[A-Z])(?=.*\d).*$/;
         const result = (value.match(pattern)) ? true : false;
-        this.setState({validPassword: result});
+        this.setState({ validPassword: result, password: value });
     }
 
     submit() {
-
         if (this.state.validEmail && this.state.validPassword) {
-            this.props.onSubmit();
+            this.props.onSubmit(this.state.email, this.state.password);
         }
     }
 
     render() {
         return (
-            <form id="login-form">
+            <form
+                id="login-form"
+                onSubmit={(e) => { e.preventDefault(); this.submit(); }}
+                method='POST'>
                 <h2>Login</h2>
                 <div className='form-body'>
                     <label>
@@ -43,20 +47,20 @@ class Login extends React.Component {
                         <input
                             type="email"
                             name="email"
-                            onChange={(e) => this.validateEmail(e.target.value)} />
+                            onChange={(e) => this.verifyEmail(e.target.value)} />
                     </label>
                     {this.state.formChanged && !this.state.validEmail &&
                         <div className='invalid-input'>
                             Email must be a valid email
                         </div>
                     }
-                    
+
                     <label>
                         Password *
                         <input
                             type="password"
                             name="password"
-                            onChange={(e) => this.validatePassword(e.target.value)} />
+                            onChange={(e) => this.verifyPassword(e.target.value)} />
                     </label>
                     {this.state.formChanged && !this.state.validPassword &&
                         <div className='invalid-input'>
@@ -65,8 +69,7 @@ class Login extends React.Component {
                     }
 
                     <button
-                        type="button"
-                        onClick={() => this.submit()}>login</button>
+                        type="submit">login</button>
                 </div>
             </form>
         );

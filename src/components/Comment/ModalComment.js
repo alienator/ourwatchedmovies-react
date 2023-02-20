@@ -1,15 +1,9 @@
 import React from 'react';
 
 class ModalComment extends React.Component {
-    //    c = (this.props.comment) ? this.props.comment.comment : '';
-    
-    
     constructor(props) {
         super(props);
-        
-        this.state = {
-            comment: this.c
-        };
+
     }
 
     changeComment(value) {
@@ -24,8 +18,10 @@ class ModalComment extends React.Component {
     render() {
         return (
             <div className='modal'>
-                <form id="comment" onSubmit={
-                    (e) => { e.preventDefault(); this.handleSubmit(); }}>
+                <form
+                    id="comment"
+                    onSubmit={(e) => { e.preventDefault(); this.handleSubmit(); }
+                    }>
                     <h2>Comment</h2>
                     <div className='form-body'>
                         <label>
@@ -33,7 +29,7 @@ class ModalComment extends React.Component {
                             <textarea
                                 onChange={(e) => this.changeComment(e.target.value)}
                                 name='comment'
-                                defaultValue={this.c}></textarea>
+                                defaultValue={this.props.comment.comment}></textarea>
                         </label>
                         <button type='submit'>add</button>
                     </div>

@@ -10,7 +10,11 @@ class MovieDetails extends React.Component {
     addMovie() {
         this.props.handleAddMovie(this.props.Details);
     }
-    
+
+    handleShowScores() {
+        this.props.hsnldeShowScores();
+    }
+
     render() {
         return (
             <div id="movie-details">
@@ -26,7 +30,14 @@ class MovieDetails extends React.Component {
                         {this.props.Details.watchedDate &&
                             <>
                                 <span>Watched Date: {this.props.Details.watchedDate}</span>
-                                <a href="#">Our Score: {this.props.Details.ourScore}</a>
+                                <a
+                                    href="#"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        this.handleShowScores()
+                                    }}>
+                                    Our Score:
+                                    {this.props.Details.ourScore}</a>
                             </>}
 
                         {!this.props.Details.watchedDate &&
@@ -34,7 +45,7 @@ class MovieDetails extends React.Component {
                                 <button
                                     type='button'
                                     onClick={() => this.addMovie()}>
-                                add to our watched movies</button>
+                                    add to our watched movies</button>
                             </>
                         }
                     </div>

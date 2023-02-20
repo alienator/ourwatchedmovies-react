@@ -35,7 +35,10 @@ class ModalAddMovie extends React.Component {
     render() {
         return (
             <div className='modal'>
-                <form id="add-movie" onSubmit={() => this.submit()}>
+                <form
+                    id="add-movie"
+                    onSubmit={(e) => { e.preventDefault(); this.submit() }
+                    }>
                     <h2>Add movie</h2>
                     <div className='form-body'>
                         <label>

@@ -1,4 +1,4 @@
-function Movie(movie) {
+export default function Movie(movie) {
     movie = movie.Movie;
     return (
         <div className="movie">
@@ -12,5 +12,3 @@ function Movie(movie) {
         </div>
     );
 }
-
-export default Movie;
