@@ -68,6 +68,10 @@ export default class App extends React.Component {
         if (res.length > 0) this.setState({ findResults: res });
     }
 
+    handleSaveUserInfo(data) {
+        this.props.Api.saveUser(data);
+    }
+
     renderLogin() {
         return (
             <Login
@@ -129,6 +133,7 @@ export default class App extends React.Component {
         return (
             <>
                 <Header
+                    handleSaveUserInfo = {(data) => this.handleSaveUserInfo(data)}
                     User={this.state.user}
                     gotoFinder={() => this.gotoFinder()} />
                 {!userLoged ? this.renderLogin() :

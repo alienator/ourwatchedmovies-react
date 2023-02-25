@@ -142,6 +142,10 @@ class Api {
             this.scores.push(c);
         }
     }
+
+    saveUser(user) {
+        console.log('UU', user);
+    }
 };
 
 const api = new Api();
